@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Box from '@material-ui/core/Box';
+import { withStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./containers/Home";
+import NotFound from "./containers/NotFound";
+import Search from "./containers/Search";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const styles = () => ({
+  root: {
+    flexGrow: 1,
+  }
+});
+
+class App extends Component {
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <Router>
+        <div className={classes.root}>
+          <Box component="span">
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+              <Route path="/">
+                <NotFound />
+              </Route>
+            </Switch>
+          </Box>
+        </div>
+      </Router>
+    );
+  }
 }
 
-export default App;
+export default withStyles(styles)(App);
